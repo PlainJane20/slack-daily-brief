@@ -132,6 +132,32 @@ notes, not a broadcast) and the generated brief posts there automatically
 after each run, via your own user token, using the `chat:write` scope. Leave
 it blank to skip posting entirely.
 
+## Running it automatically every morning (macOS)
+
+`run_daily_brief.sh` wraps the agent for unattended execution — `--quick`
+skips the interactive channel picker and `--out` skips the "save?" confirm
+prompt, so there's zero interactivity to hang on with no TTY attached
+(verified by running it with `< /dev/null`, same as cron/launchd would).
+
+1. Copy the template and fill in your absolute path:
+   ```bash
+   cp com.example.slack-daily-brief.plist ~/Library/LaunchAgents/com.<you>.slack-daily-brief.plist
+   # edit it: replace /absolute/path/to/slack-daily-agent with your actual path
+   ```
+2. Load it:
+   ```bash
+   launchctl load -w ~/Library/LaunchAgents/com.<you>.slack-daily-brief.plist
+   ```
+3. Check it's registered: `launchctl list | grep slack-daily-brief`
+
+It only runs while you're logged in (standard LaunchAgent limitation — fine
+for a laptop you use daily). To change the time, edit the `Hour`/`Minute`
+values and reload. To disable: `launchctl unload ~/Library/LaunchAgents/com.<you>.slack-daily-brief.plist`.
+
+Logs land in `logs/launchd.out.log` / `logs/launchd.err.log` (gitignored).
+
+---
+
 ## Stale item tracking
 
 Without this, an unanswered question shows up in the brief identically every
