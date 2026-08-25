@@ -326,8 +326,9 @@ question that was answered later in the same thread is resolved, not open;
 do not include it anywhere in the brief.
 
 ## 📰 Channel Summaries
-One short paragraph per channel that had activity.
-For quiet channels, note them briefly: "**#channel-name** — No significant activity."
+For each channel, a "**#channel-name**" header followed by 2-4 short bullet
+points covering what happened — do not compress it into one paragraph.
+For quiet channels, still give a header with a single bullet: "- No significant activity."
 
 ---
 
