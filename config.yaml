@@ -13,6 +13,12 @@ channels:
   - all-scope-creep-social-club
   - social
   - new-channel
+  - the-backlog
+  - roadmap-rumors
+  - ship-it-or-skip-it
+  - scope-and-scotch
+  - got-a-sec
+  - standup-or-sitdown
 
 # ── Optional: channels to skip ────────────────────────────────────────────────
 # Even if the channel appears in your workspace, always skip these.
