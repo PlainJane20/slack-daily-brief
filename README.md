@@ -53,6 +53,24 @@ flowchart LR
     Cron["launchd<br/>8:00 AM daily"] -.->|"run_daily_brief.sh<br/>--quick --out"| Agent
 ```
 
+## Key achievements
+
+- **Diagnosed and remediated a hallucination regression** via a custom
+  rubric-graded eval harness — pass rate **50% → 90%**, hallucinations
+  **8 → 0**, verified against raw saved judge output in `eval/results/`.
+- **Found and fixed a silent bug in the eval harness's own metrics layer** —
+  a malformed judge response corrupted a derived metric by ~16x with no
+  exception raised. [Full writeup below](#the-eval-harness-itself-had-a-bug).
+- **Surfaced two latent production defects through live integration testing**
+  before they reached real usage, not caught by unit tests alone.
+- **Zero-marginal-cost state tracking** — day-over-day follow-through via
+  deterministic string matching instead of an added LLM call per run.
+- **Verified, not assumed, unattended execution** — the scheduled path was
+  tested with stdin bound to `/dev/null` before being trusted with a cron job.
+
+📄 Full portable write-up (architecture, milestone-by-milestone changelog,
+copy-paste Mermaid diagram, terminal demo): [`docs/EXECUTIVE_SUMMARY.md`](docs/EXECUTIVE_SUMMARY.md)
+
 ## What's built here
 
 | Piece | What it does |
