@@ -5,3 +5,4 @@ venv/
 .venv/
 *.md.bak
 history/*.json
+logs/*.log
