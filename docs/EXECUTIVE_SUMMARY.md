@@ -248,5 +248,12 @@ $ python3 agent.py --quick --hours 2
 
 ---
 
+## Contact
+
+**Navi Sohi** · *Technical Program Manager & Automation Engineer*
+[GitHub](https://github.com/PlainJane20) · [Email](mailto:nks.ai.dev@gmail.com)
+
+---
+
 *Generated from the actual repository state and commit history as of
 `9c1d5d9`. Full source: [github.com/PlainJane20/slack-daily-brief](https://github.com/PlainJane20/slack-daily-brief).*
