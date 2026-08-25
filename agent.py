@@ -35,6 +35,8 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 import anthropic
 
+from tracking import annotate_stale_items
+
 load_dotenv()
 console = Console()
 
@@ -597,6 +599,14 @@ def main():
         return
 
     summary = summarize(formatted, model, focus, date_str)
+
+    # ── Track stale open items across days ──
+    if get_cfg(cfg, "stale_tracking_enabled", True):
+        summary = annotate_stale_items(
+            summary,
+            today=now.strftime("%Y-%m-%d"),
+            stale_after_days=get_cfg(cfg, "stale_after_days", 2),
+        )
 
     # ── Display ──
     display_summary(summary)

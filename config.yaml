@@ -47,6 +47,13 @@ print_to_terminal: true
 # chat:write scope). Leave blank/unset to skip posting to Slack entirely.
 slack_post_channel: "daily-brief"
 
+# ── Stale item tracking ────────────────────────────────────────────────────────
+# Flags open questions that keep showing up run over run instead of silently
+# repeating them forever. State lives in history/open_items.json.
+stale_tracking_enabled: true
+# Flag an item once it's appeared on this many distinct days.
+stale_after_days: 2
+
 # ── Claude model ──────────────────────────────────────────────────────────────
 # Model to use for summarization. claude-sonnet-5 is fast and cost-effective.
 claude_model: "claude-sonnet-5"
