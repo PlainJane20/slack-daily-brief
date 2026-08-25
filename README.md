@@ -385,3 +385,21 @@ anywhere public.
 | `missing_scope` | Add the required scope in the Slack App settings and reinstall |
 | `ratelimited` | The script already has delays; wait a minute and retry |
 | Channels show `not found` | Check spelling in `config.yaml`; channel names are case-insensitive |
+
+---
+
+## Contact
+
+<div align="center">
+
+### **Navi Sohi**
+*Technical Program Manager & Automation Engineer*
+
+<br>
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/PlainJane20)
+[![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:nks.ai.dev@gmail.com)
+
+<br>
+
+</div>
