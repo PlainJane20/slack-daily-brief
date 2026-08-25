@@ -251,7 +251,7 @@ $ python3 agent.py --quick --hours 2
 ## Contact
 
 **Navi Sohi** · *Technical Program Manager & Automation Engineer*
-[LinkedIn](https://www.linkedin.com/in/navisohi/) · [GitHub](https://github.com/PlainJane20) · [Email](mailto:nks.ai.dev@gmail.com)
+[LinkedIn](https://www.linkedin.com/in/navisohi/) · [GitHub](https://github.com/PlainJane20) · [nks.ai.dev@gmail.com](mailto:nks.ai.dev@gmail.com)
 
 ---
 
