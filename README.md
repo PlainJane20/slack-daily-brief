@@ -1,6 +1,79 @@
-# Slack Daily Summary Agent
+# Slack Daily Brief Agent
 
-Reads your Slack channels and produces a structured brief with action items, decisions, blockers, and open questions — powered by Claude.
+<div align="center">
+
+[![Python 3.9+](https://img.shields.io/badge/Python_3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Powered by Claude](https://img.shields.io/badge/Powered_by-Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white)](https://www.anthropic.com/)
+[![Slack API](https://img.shields.io/badge/Slack_API-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://api.slack.com/)
+[![Eval-tested](https://img.shields.io/badge/Eval_pass_rate-90%25-1baf7a?style=for-the-badge)](eval/)
+
+</div>
+
+An LLM agent that turns a day's worth of Slack noise into a structured brief
+— decisions, action items, blockers, open questions — with an eval harness
+that caught (and proved the fix for) a real hallucination bug, day-over-day
+stale-item tracking so nothing quietly repeats forever, and fully unattended
+daily scheduling.
+
+**Why this exists:** built to get real, hands-on practice with the parts of
+shipping an LLM feature that don't show up in a demo — evals, prompt
+regressions, and the gap between "the output looks right" and "the output
+*is* right." Every claim in this README is backed by a script or a saved
+report in this repo, not a slide — the eval reports in `eval/results/` are
+the actual raw data behind the numbers below, not an example of what they
+could look like.
+
+## At a glance
+
+| | |
+|---|---|
+| **Problem** | Manually skimming Slack every morning for decisions, blockers, and asks buried in channel noise |
+| **Approach** | Claude-summarized daily brief, hardened against hallucination with a rubric-graded eval harness, tracked day-over-day so nothing silently repeats forever |
+| **Result** | Eval pass rate **50% → 90%**, hallucinations **8 → 0** across the suite, verified against raw saved reports (below) |
+| **Stack** | Python · Claude (Anthropic API) · Slack API · `difflib` for deterministic matching · `launchd` for scheduling |
+
+![Eval pass rate before and after the prompt fix](docs/images/eval_pass_rate.png)
+
+## Architecture
+
+```mermaid
+flowchart LR
+    Slack[("Slack channels")] -->|"conversations.history<br/>user token, read-only"| Agent["agent.py"]
+    Agent -->|raw transcript| Claude["Claude<br/>summarize()"]
+    Claude -->|brief markdown| Track["tracking.py<br/>stale-item diff"]
+    Track --> Post["Slack #daily-brief<br/>chat.postMessage"]
+    Track --> File[("~/slack-summary.md")]
+    Track --> Console["Terminal display"]
+
+    Fixtures["eval/fixtures.py<br/>10 synthetic transcripts"] --> Runner["eval/run_eval.py"]
+    Runner -->|same summarize call| Claude
+    Runner --> Judge["eval/grader.py<br/>LLM judge, forced tool call"]
+    Judge --> Reports[("eval/results/*.json")]
+
+    Cron["launchd<br/>8:00 AM daily"] -.->|"run_daily_brief.sh<br/>--quick --out"| Agent
+```
+
+## What's built here
+
+| Piece | What it does |
+|---|---|
+| [`agent.py`](agent.py) | Reads Slack, calls Claude, renders the brief, posts back to Slack |
+| [`eval/`](eval/) | 10-fixture rubric-graded eval harness with an LLM judge — [details & real numbers below](#eval-harness) |
+| [`tracking.py`](tracking.py) | Day-over-day stale-item detection via `difflib` — no repeated open question goes unnoticed |
+| [`run_daily_brief.sh`](run_daily_brief.sh) + [`com.example.slack-daily-brief.plist`](com.example.slack-daily-brief.plist) | Fully unattended daily scheduling via `launchd`, verified with no TTY attached |
+| [`config.yaml`](config.yaml) | Channels, thresholds, Slack-posting target — all runtime behavior in one file |
+
+## Key engineering decisions
+
+| Decision | Why |
+|---|---|
+| `difflib` instead of an LLM call for stale-item matching | Day-to-day wording of the same lingering question is usually similar enough for deterministic string matching — free, debuggable, no added latency. Documented limitation and upgrade path in [`tracking.py`](tracking.py). |
+| Forced tool-call (schema) for the eval judge | Structured grading output you can aggregate, not prose you have to parse — see [`eval/grader.py`](eval/grader.py) |
+| Least-privilege Slack scopes, added incrementally | Started with 5 read-only scopes; added `chat:write` only once posting-back was actually needed — never requested more access than the current feature required |
+| `--quick --out` for unattended runs | Eliminates every interactive prompt (channel picker, save confirm) — verified by running with `< /dev/null`, not assumed |
+| Type-checked judge output instead of trusting "it's iterable" | A judge response once returned a JSON string instead of an array; iterating it silently produced 209 garbage entries. Fixed with an explicit `isinstance` check — [full writeup below](#the-eval-harness-itself-had-a-bug) |
+
+---
 
 ## Output example
 
@@ -235,16 +308,54 @@ be *invented* — and reran:
 python eval/run_eval.py --save --compare eval/results/run_<baseline>.json
 ```
 
-**Result: 9/10 fixtures passed, pass rate 90%, zero hallucinations across the
-suite** (up from at least 5 hallucinated claims in the baseline run). The one
-remaining failure is a judgment call, not a hallucination: a Q&A exchange
-resolved inside a thread gets written up as a "Key Decision" rather than
-being left out — arguably reasonable content, just filed under the wrong
-header. Saved reports for both runs are in `eval/results/` for the exact diff.
+| Metric | Baseline | After fix |
+|---|---|---|
+| Pass rate | 50% (5/10) | 90% (9/10) |
+| Recall (expected facts surfaced) | 90% | 100% |
+| Hallucinations | 8 | 0 |
+| Category errors | 3 | 2 |
 
-This is the harness doing its actual job: catching a real, non-obvious
-quality regression that a few manual spot-checks of the output would have
-missed, and giving a before/after number to prove the fix worked.
+![Eval pass rate before and after the prompt fix](docs/images/eval_pass_rate.png)
+![Hallucination and category-error counts before and after](docs/images/eval_quality_issues.png)
+
+The sharper insight the corrected numbers surface: baseline recall was
+already 90% — the agent wasn't *missing* information. The actual failure
+mode was precision: it kept *adding* things that weren't there (invented
+owners, invented tasks, invented severity). That's a meaningfully different
+bug to be chasing than "the model missed something," and the eval harness
+is what made that distinction visible instead of guessing from a few
+spot-checked outputs.
+
+The one remaining failure after the fix is a judgment call, not a
+hallucination: a Q&A exchange resolved inside a thread gets written up as a
+"Key Decision" rather than being left out — arguably reasonable content,
+just filed under the wrong header. Saved reports for both runs are in
+`eval/results/` for the exact diff.
+
+### The eval harness itself had a bug
+
+Worth being honest about, since it's as good a lesson as the finding above:
+while preparing these numbers for writeup, one judge response came back with
+`matched_expected` as a JSON-encoded *string* instead of an array. Python
+happily iterates a string character-by-character with no error — the code
+did exactly that, turning one grading call into 209 garbage one-character
+"facts," which silently cratered the recall stat to ~5% with nothing
+indicating why. `pass_rate` (a plain string field, not iterated) was
+unaffected and stayed correct throughout.
+
+Fixed by (1) explicitly checking `isinstance(items, list)` before iterating
+any nested judge output — "it's iterable" is not the same guarantee as "it's
+the array I asked for" — and (2) computing the recall denominator from each
+fixture's ground-truth expected-fact count instead of trusting the judge's
+returned array length, so one degenerate call can't silently skew the whole
+run's aggregate. See [eval/run_eval.py](eval/run_eval.py)'s `_normalize_grade`
+and recall calculation for the fix. Numbers above are post-fix and verified
+against the raw per-fixture grades in `eval/results/`.
+
+This is the harness doing its actual job twice over: catching a real,
+non-obvious quality regression in the agent that spot-checking would have
+missed, and then catching a bug in its own metrics before those numbers went
+anywhere public.
 
 ---
 

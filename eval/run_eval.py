@@ -52,6 +52,20 @@ def _normalize_grade(grade: dict, fixture_id: str) -> dict:
     instead of blowing up the whole run.
     """
     def clean_list(items, required_key, fallback_key):
+        if not isinstance(items, list):
+            # Seen in practice: the judge returned a JSON-encoded *string*
+            # instead of an array for this field. Iterating a string in
+            # Python walks it character-by-character with no error — that
+            # silently produced 209 garbage "matched_expected" entries (one
+            # per character) in an early run here, which cratered the recall
+            # stat to ~5% with no indication anything was wrong. Guard the
+            # type explicitly instead of trusting "it's iterable" to mean
+            # "it's the list we asked for."
+            console.print(
+                f"  [yellow]warning:[/] {fixture_id} — grader field was a "
+                f"{type(items).__name__}, not a list ({items!r:.80}); treating as empty"
+            )
+            return []
         out = []
         for it in items:
             if isinstance(it, dict) and required_key in it:
@@ -90,10 +104,22 @@ def run(model: str, judge_model: str) -> dict:
         })
         console.print(f"  [{'green' if grade['verdict'] == 'pass' else 'red'}]{grade['verdict'].upper():4}[/]  {fx['id']}")
 
-    total_facts = sum(len(r["grade"]["matched_expected"]) for r in fixture_results)
-    found_facts = sum(
-        sum(1 for f in r["grade"]["matched_expected"] if f["found"]) for r in fixture_results
-    )
+    # Recall is computed against each fixture's actual expected-fact count
+    # (ground truth from FIXTURES), not the judge's returned array length —
+    # a single degenerate grading call returning too many entries otherwise
+    # skews the pooled denominator for the whole run. Capping found-count at
+    # the expected total, then averaging *per-fixture* recall, means one bad
+    # call can only ever cost that one fixture's data point, not the metric.
+    fixtures_by_id = {fx["id"]: fx for fx in FIXTURES}
+    per_fixture_recalls = []
+    for r in fixture_results:
+        expected_count = sum(len(v) for v in fixtures_by_id[r["id"]]["expects"].values())
+        if expected_count == 0:
+            per_fixture_recalls.append(1.0)
+            continue
+        found_count = sum(1 for f in r["grade"]["matched_expected"] if f["found"])
+        per_fixture_recalls.append(min(found_count, expected_count) / expected_count)
+
     total_hallucinations = sum(len(r["grade"]["hallucinations"]) for r in fixture_results)
     total_category_errors = sum(len(r["grade"]["category_errors"]) for r in fixture_results)
     passed = sum(1 for r in fixture_results if r["grade"]["verdict"] == "pass")
@@ -106,7 +132,7 @@ def run(model: str, judge_model: str) -> dict:
             "pass_rate": passed / len(fixture_results),
             "fixtures_passed": passed,
             "fixtures_total": len(fixture_results),
-            "recall": found_facts / total_facts if total_facts else 1.0,
+            "recall": sum(per_fixture_recalls) / len(per_fixture_recalls),
             "hallucinations": total_hallucinations,
             "category_errors": total_category_errors,
         },

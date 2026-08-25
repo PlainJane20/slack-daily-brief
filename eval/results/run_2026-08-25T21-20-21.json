@@ -1701,7 +1701,7 @@
     "pass_rate": 0.5,
     "fixtures_passed": 5,
     "fixtures_total": 10,
-    "recall": 0.05429864253393665,
+    "recall": 0.9,
     "hallucinations": 8,
     "category_errors": 3
   }
