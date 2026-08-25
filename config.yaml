@@ -22,8 +22,7 @@ channels:
 
 # ── Optional: channels to skip ────────────────────────────────────────────────
 # Even if the channel appears in your workspace, always skip these.
-skip_channels:
-  - verily-slack-help   # meta/admin noise
+skip_channels: []
 
 # ── Thread depth ──────────────────────────────────────────────────────────────
 # Fetch replies inside threads? Adds context but takes more API calls.
@@ -43,6 +42,10 @@ min_message_length: 10
 output_file: "~/slack-summary.md"
 # Also always print to terminal?
 print_to_terminal: true
+
+# Post the brief into a Slack channel after generating it (requires the
+# chat:write scope). Leave blank/unset to skip posting to Slack entirely.
+slack_post_channel: "daily-brief"
 
 # ── Claude model ──────────────────────────────────────────────────────────────
 # Model to use for summarization. claude-sonnet-5 is fast and cost-effective.

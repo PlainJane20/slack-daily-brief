@@ -14,6 +14,7 @@ Usage:
 
 import argparse
 import os
+import re
 import sys
 import time
 from datetime import datetime, timedelta, timezone
@@ -383,6 +384,40 @@ def save_summary(summary: str, path: str):
     console.print(f"\n[green]✓[/] Saved to [bold]{p}[/]")
 
 
+def slackify(markdown: str) -> str:
+    """
+    Slack's message formatting isn't standard markdown — no ## headers, and
+    bold is single asterisks, not double. Good-enough conversion for a plain
+    text post (not using Block Kit): headers become bold lines, **bold**
+    becomes *bold*, everything else (bullets, checkboxes) posts as-is.
+    """
+    lines = []
+    for line in markdown.splitlines():
+        stripped = line.lstrip("#").strip()
+        if line.startswith("#"):
+            lines.append(f"*{stripped}*")
+        else:
+            lines.append(line)
+    text = "\n".join(lines)
+    return re.sub(r"\*\*(.+?)\*\*", r"*\1*", text)
+
+
+def post_to_slack(client: WebClient, channel_name: str, summary: str):
+    cid = get_channel_id(client, channel_name)
+    if not cid:
+        console.print(
+            f"[yellow]Couldn't post to #{channel_name} — channel not found or "
+            f"you're not a member. Create it in Slack first, or update "
+            f"slack_post_channel in config.yaml.[/]"
+        )
+        return
+    try:
+        client.chat_postMessage(channel=cid, text=slackify(summary))
+        console.print(f"[green]✓[/] Posted brief to #{channel_name}")
+    except SlackApiError as e:
+        console.print(f"[red]Failed to post to #{channel_name}:[/] {e.response['error']}")
+
+
 # ─── Main ────────────────────────────────────────────────────────────────────
 
 def main():
@@ -572,6 +607,11 @@ def main():
     elif out_cfg and out_cfg != "stdout_only":
         if questionary.confirm(f"Save brief to {out_cfg}?", default=True).ask():
             save_summary(summary, out_cfg)
+
+    # ── Post to Slack ──
+    post_channel = get_cfg(cfg, "slack_post_channel", None)
+    if post_channel:
+        post_to_slack(slack, post_channel, summary)
 
 
 if __name__ == "__main__":
