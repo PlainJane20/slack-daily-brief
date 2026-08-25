@@ -1,0 +1,53 @@
+# Slack Daily Summary Agent — Configuration
+# Edit this file to control what gets read and summarized.
+
+# ── Time window ──────────────────────────────────────────────────────────────
+# How many hours back to look for messages (24 = past day, 8 = last work block)
+lookback_hours: 24
+
+# ── Channels to monitor ──────────────────────────────────────────────────────
+# Use the channel NAME (without #). The agent will look up the ID automatically.
+# You must be a member of every channel listed here — channel lookup requires
+# membership, it isn't a workspace-wide search.
+channels:
+  - general
+  # - your-team-channel
+  # - product
+  # - engineering
+
+# ── Optional: channels to skip ────────────────────────────────────────────────
+# Even if the channel appears in your workspace, always skip these.
+skip_channels:
+  - verily-slack-help   # meta/admin noise
+
+# ── Thread depth ──────────────────────────────────────────────────────────────
+# Fetch replies inside threads? Adds context but takes more API calls.
+fetch_threads: true
+# Max replies to pull per thread (0 = unlimited)
+max_replies_per_thread: 20
+
+# ── Filtering ─────────────────────────────────────────────────────────────────
+# Skip messages that are only emoji reactions, GIFs, or very short.
+skip_trivial_messages: true
+# Minimum character length for a message to be included
+min_message_length: 10
+
+# ── Output ────────────────────────────────────────────────────────────────────
+# Where to write the markdown summary file.
+# Use "stdout_only" to skip file output and only print to terminal.
+output_file: "~/slack-summary.md"
+# Also always print to terminal?
+print_to_terminal: true
+
+# ── Claude model ──────────────────────────────────────────────────────────────
+# Model to use for summarization. claude-sonnet-5 is fast and cost-effective.
+claude_model: "claude-sonnet-5"
+
+# ── Summary style ─────────────────────────────────────────────────────────────
+# What to emphasize in the summary.
+focus_areas:
+  - Decisions made
+  - Action items with owners
+  - Blockers or urgent issues
+  - Key announcements
+  - Questions that need a response
