@@ -401,6 +401,8 @@ anywhere public.
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/PlainJane20)
 [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:nks.ai.dev@gmail.com)
 
+`nks.ai.dev@gmail.com`
+
 <br>
 
 </div>
