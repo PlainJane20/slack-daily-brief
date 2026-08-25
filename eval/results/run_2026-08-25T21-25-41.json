@@ -1,0 +1,212 @@
+{
+  "model": "claude-sonnet-5",
+  "judge_model": "claude-sonnet-5",
+  "fixture_results": [
+    {
+      "id": "explicit_decision_and_owner",
+      "notes": "",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udd11 Key Decisions\n- v2.1 launch pushed to Sep 15, confirmed with leadership. [#product]\n\n## \u2705 Action Items\n- [ ] **@deepak**: Update the external launch doc by EOD Friday \u2014 [#product]\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Discussed the v2.1 launch date slipping to Sep 15; Deepak took ownership of updating the external launch doc by EOD Friday.",
+      "grade": {
+        "category_errors": [],
+        "hallucinations": [],
+        "matched_expected": [
+          {
+            "fact": "v2.1 launch date moved to Sep 15",
+            "found": true,
+            "evidence": "v2.1 launch pushed to Sep 15, confirmed with leadership."
+          },
+          {
+            "fact": "action item: deepak to update the external launch doc by EOD Friday",
+            "found": true,
+            "evidence": "@deepak: Update the external launch doc by EOD Friday"
+          }
+        ],
+        "reasoning": "Both expected facts are accurately captured, correctly categorized as a decision and an action item, and no hallucinations or forbidden claims appear.",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "inferred_owner_from_context",
+      "notes": "",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \u2705 Action Items\n- [ ] **@alex**: Investigate the failing staging DB migration script for the new tenants table \u2014 [#engineering]\n\n## \ud83d\udea8 Blockers & Urgencies\n- Staging DB migration script is failing on the new tenants table (#engineering).\n\n## \ud83d\udcf0 Channel Summaries\n**#engineering** \u2014 Sam reported a failing staging DB migration script on the new tenants table; Alex, the original author of the migration, agreed to investigate it that afternoon.",
+      "grade": {
+        "matched_expected": [
+          {
+            "fact": "action_items: alex to investigate/fix the failing staging DB migration",
+            "found": true,
+            "evidence": "@alex: Investigate the failing staging DB migration script for the new tenants table"
+          },
+          {
+            "fact": "blockers: staging DB migration script is failing on the new tenants table",
+            "found": true,
+            "evidence": "Staging DB migration script is failing on the new tenants table (#engineering)."
+          }
+        ],
+        "hallucinations": [],
+        "category_errors": [],
+        "verdict": "pass",
+        "reasoning": "Both expected facts are correctly captured, no hallucinations or category errors, and the forbidden claim about Sam fixing the migration does not appear."
+      }
+    },
+    {
+      "id": "duplicate_topic_merges_across_channels",
+      "notes": "Should appear as ONE decision, not duplicated per-channel.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udce3 Announcements & FYIs\n- Q3 infra migration delayed two weeks to allow the compliance audit to finish first (announced in #product and #engineering by jordan).\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Jordan announced a two-week delay to the Q3 infra migration due to a pending compliance audit.\n**#engineering** \u2014 Jordan relayed the same infra migration delay to the eng team, citing the compliance audit as the reason.",
+      "grade": {
+        "category_errors": [
+          "The single decision fact is placed under 'Announcements & FYIs' rather than a 'Decisions' section, though the rubric labels it as [decisions]. This is a minor categorization mismatch but the content is substantively correct and not miscategorized as an action item or question."
+        ],
+        "hallucinations": [],
+        "matched_expected": [
+          {
+            "fact": "Q3 infra migration delayed two weeks for the compliance audit",
+            "found": true,
+            "evidence": "Q3 infra migration delayed two weeks to allow the compliance audit to finish first (announced in #product and #engineering by jordan)."
+          }
+        ],
+        "reasoning": "The summary correctly identifies the single infra migration delay decision, correctly attributes it to jordan across both channels, and does not fabricate two separate decisions or unrelated delays. The only issue is placing the fact under FYIs instead of a Decisions section, but this is a minor categorization nuance rather than a substantive error like treating it as a question.",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "question_resolved_later_in_thread_not_open",
+      "notes": "The question WAS answered in-thread \u2014 must not show up under Open Questions.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udd11 Key Decisions\n- Auth service ownership has moved to Priya's team as part of the recent reorg.\n\n## \ud83d\udce3 Announcements & FYIs\n- Auth service is now owned by Priya's team following the reorg (confirmed by raj).\n\n## \ud83d\udcf0 Channel Summaries\n**#engineering** \u2014 Brief exchange clarifying that auth service ownership shifted to Priya's team after the reorg.",
+      "grade": {
+        "category_errors": [
+          "Summary presents the auth service ownership as a 'Key Decision', but the transcript shows this was simply a Q&A clarification (mia asking, raj answering), not a decision being made."
+        ],
+        "hallucinations": [],
+        "matched_expected": [],
+        "reasoning": "The rubric expected a minimal/empty summary since the transcript is just a short Q&A clarification, but the agent fabricated a 'Key Decision' section and treated a factual clarification as a formal decision, which is a category error. While the underlying fact (Priya's team owns auth service) is technically supported by the transcript, the framing misrepresents a simple Q&A as a decision.",
+        "verdict": "fail"
+      }
+    },
+    {
+      "id": "question_left_unanswered_stays_open",
+      "notes": "",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \u2753 Open Questions\n- taylor asked if the v2.1 pricing page copy is final yet \u2014 no response given. [#product]\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Single unanswered question about whether v2.1 pricing page copy is final.",
+      "grade": {
+        "matched_expected": [
+          {
+            "fact": "[open_questions] is the v2.1 pricing page copy final?",
+            "found": true,
+            "evidence": "taylor asked if the v2.1 pricing page copy is final yet \u2014 no response given. [#product]"
+          }
+        ],
+        "hallucinations": [],
+        "category_errors": [],
+        "verdict": "pass",
+        "reasoning": "The summary correctly captures the single open question from the transcript with no added claims or category errors."
+      }
+    },
+    {
+      "id": "lookalike_decision_is_actually_a_question",
+      "notes": "A proposal phrased as a question with no reply must NOT become a firm decision.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \u2753 Open Questions\n- Noah asked whether v2.1 launch should be delayed by a week to fix the onboarding bug \u2014 no response received. [#product]\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Noah raised a question about delaying the v2.1 launch to fix an onboarding bug; received no response.",
+      "grade": {
+        "category_errors": [],
+        "hallucinations": [],
+        "matched_expected": [
+          {
+            "fact": "open_questions: should the v2.1 launch be delayed a week to fix the onboarding bug?",
+            "found": true,
+            "evidence": "Noah asked whether v2.1 launch should be delayed by a week to fix the onboarding bug \u2014 no response received. [#product]"
+          }
+        ],
+        "verdict": "pass",
+        "reasoning": "The summary correctly captures the open question without asserting a decision, matching the transcript and avoiding the forbidden claim."
+      }
+    },
+    {
+      "id": "noise_filtering_standup_bot_and_reactions",
+      "notes": "",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udea8 Blockers & Urgencies\n- Prod data pipeline is failing for 3 customers; sam needs access to prod logs to debug \u2014 [#engineering]\n\n## \u2753 Open Questions\n- sam asked if someone from platform can help with prod log access \u2014 no response yet \u2014 [#engineering]\n\n## \ud83d\udcf0 Channel Summaries\n**#engineering** \u2014 sam reported the prod data pipeline failing for 3 customers and requested platform access/help to debug; no response yet.",
+      "grade": {
+        "category_errors": [],
+        "hallucinations": [],
+        "matched_expected": [
+          {
+            "fact": "prod data pipeline failing for 3 customers, sam needs prod log access",
+            "found": true,
+            "evidence": "Prod data pipeline is failing for 3 customers; sam needs access to prod logs to debug \u2014 [#engineering]"
+          }
+        ],
+        "verdict": "pass",
+        "reasoning": "The summary correctly captures the blocker fact, does not mention the standup bot reminder as an action item, and does not treat emoji reactions as content. The additional 'Open Questions' and 'Channel Summaries' sections are reasonable restatements grounded in the transcript, not hallucinations."
+      }
+    },
+    {
+      "id": "quiet_channel_still_listed",
+      "notes": "Channel had zero messages \u2014 must still appear in Channel Summaries as quiet, per system prompt rule.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udcf0 Channel Summaries\n**#random** \u2014 No significant activity.",
+      "grade": {
+        "matched_expected": [
+          {
+            "fact": "channel_summaries_mention #random",
+            "found": true,
+            "evidence": "**#random** \u2014 No significant activity."
+          }
+        ],
+        "hallucinations": [],
+        "category_errors": [],
+        "verdict": "pass",
+        "reasoning": "The transcript is empty/minimal, and the summary correctly mentions #random with no fabricated content, satisfying the sole rubric requirement without hallucinations."
+      }
+    },
+    {
+      "id": "announcement_not_miscategorized_as_action_item",
+      "notes": "'No action needed' FYIs must land in Announcements, not be turned into a checklist item.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udce3 Announcements & FYIs\n- New security policy requires 2FA on all service accounts by Sep 1. No action needed if already enabled. \u2014 [#verily-it-announce]\n- All-hands moved to Thursday 10 AM PT this week only. \u2014 [#verily-it-announce]\n\n## \ud83d\udcf0 Channel Summaries\n**#verily-it-announce** \u2014 IT announced a new 2FA requirement for service accounts (deadline Sep 1) and a one-time schedule change moving all-hands to Thursday 10 AM PT this week.",
+      "grade": {
+        "category_errors": [],
+        "hallucinations": [],
+        "matched_expected": [
+          {
+            "fact": "2FA required on service accounts by Sep 1",
+            "found": true,
+            "evidence": "New security policy requires 2FA on all service accounts by Sep 1. No action needed if already enabled."
+          },
+          {
+            "fact": "all-hands moved to Thursday 10 AM PT",
+            "found": true,
+            "evidence": "All-hands moved to Thursday 10 AM PT this week only."
+          }
+        ],
+        "reasoning": "Both expected facts are accurately presented as FYIs, no action item was fabricated, and no hallucinations are present.",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "multiple_distinct_decisions_not_merged",
+      "notes": "Two unrelated decisions in the same channel \u2014 must be listed as two, not blended into one.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udd11 Key Decisions\n- Legacy CSV export feature will be cut in v2.1. [#product]\n- The \"Workspaces\" tab will be renamed to \"Projects\" throughout the UI. [#product]\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Priya announced two decisions: dropping the legacy CSV export in v2.1 and renaming the \"Workspaces\" tab to \"Projects\" across the UI.",
+      "grade": {
+        "matched_expected": [
+          {
+            "fact": "cutting the legacy CSV export feature in v2.1",
+            "found": true,
+            "evidence": "Legacy CSV export feature will be cut in v2.1. [#product]"
+          },
+          {
+            "fact": "renaming the 'Workspaces' tab to 'Projects'",
+            "found": true,
+            "evidence": "The \"Workspaces\" tab will be renamed to \"Projects\" throughout the UI. [#product]"
+          }
+        ],
+        "hallucinations": [],
+        "category_errors": [],
+        "verdict": "pass",
+        "reasoning": "Both decisions are correctly captured as separate, distinct bullet points in the Key Decisions section, not merged into a vague single bullet. No hallucinations or category errors found."
+      }
+    }
+  ],
+  "summary_stats": {
+    "pass_rate": 0.9,
+    "fixtures_passed": 9,
+    "fixtures_total": 10,
+    "recall": 1.0,
+    "hallucinations": 0,
+    "category_errors": 2
+  }
+}

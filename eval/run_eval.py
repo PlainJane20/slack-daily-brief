@@ -41,6 +41,39 @@ console = Console()
 RESULTS_DIR = Path(__file__).parent / "results"
 
 
+def _normalize_grade(grade: dict, fixture_id: str) -> dict:
+    """
+    Defensively coerce the judge's structured output into the shape we expect.
+    A forced tool_choice call gets us valid JSON, but not a guarantee that
+    every nested item matches the schema's object shape — the model can still
+    hand back a bare string in a list that was supposed to hold {fact, found,
+    evidence} objects. Trusting that blindly crashes aggregation on a type
+    error with no indication which fixture caused it, so normalize + warn
+    instead of blowing up the whole run.
+    """
+    def clean_list(items, required_key, fallback_key):
+        out = []
+        for it in items:
+            if isinstance(it, dict) and required_key in it:
+                out.append(it)
+            else:
+                console.print(
+                    f"  [yellow]warning:[/] {fixture_id} — grader returned a malformed "
+                    f"entry ({it!r}), treating as unresolved"
+                )
+                out.append({fallback_key: str(it), "found": False, "evidence": "malformed grader output",
+                            "claim": str(it), "why_unsupported": "malformed grader output"})
+        return out
+
+    grade = dict(grade)
+    grade["matched_expected"] = clean_list(grade.get("matched_expected") or [], "fact", "fact")
+    grade["hallucinations"] = clean_list(grade.get("hallucinations") or [], "claim", "claim")
+    grade["category_errors"] = [str(x) for x in (grade.get("category_errors") or [])]
+    grade.setdefault("verdict", "fail")
+    grade.setdefault("reasoning", "(missing from grader output)")
+    return grade
+
+
 def run(model: str, judge_model: str) -> dict:
     date_str = "Eval Run"
     fixture_results = []
@@ -48,7 +81,7 @@ def run(model: str, judge_model: str) -> dict:
     for fx in FIXTURES:
         console.print(f"  [dim]running[/] {fx['id']} ...", end="\r")
         summary = summarize(fx["transcript"], model, focus=[], date_str=date_str)
-        grade = grade_summary(fx, summary, judge_model=judge_model)
+        grade = _normalize_grade(grade_summary(fx, summary, judge_model=judge_model), fx["id"])
         fixture_results.append({
             "id": fx["id"],
             "notes": fx.get("notes", ""),

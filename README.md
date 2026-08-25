@@ -163,6 +163,35 @@ python eval/run_eval.py --compare eval/results/run_2026-08-20T10-00-00.json
 Exits non-zero if the pass rate drops below `--threshold` (default 100%), so
 this can gate CI on prompt/system-prompt changes.
 
+### A real finding from this harness
+
+First run against the live system prompt: **5/10 fixtures failed, pass rate 50%.**
+The judge flagged a consistent pattern — the agent was inventing action-item
+owners and tasks that were never stated ("Action item: @priya to coordinate
+with engineering..." when the transcript only recorded a decision, no task or
+owner), and adding its own severity framing ("launch timeline is at risk")
+not present in the source messages. The system prompt's "Always try to name
+action item owners" rule was actively rewarding this.
+
+Tightened the prompt to require every claim be grounded in the transcript —
+owners can be *inferred* from context, but tasks, owners, and severity can't
+be *invented* — and reran:
+
+```bash
+python eval/run_eval.py --save --compare eval/results/run_<baseline>.json
+```
+
+**Result: 9/10 fixtures passed, pass rate 90%, zero hallucinations across the
+suite** (up from at least 5 hallucinated claims in the baseline run). The one
+remaining failure is a judgment call, not a hallucination: a Q&A exchange
+resolved inside a thread gets written up as a "Key Decision" rather than
+being left out — arguably reasonable content, just filed under the wrong
+header. Saved reports for both runs are in `eval/results/` for the exact diff.
+
+This is the harness doing its actual job: catching a real, non-obvious
+quality regression that a few manual spot-checks of the output would have
+missed, and giving a before/after number to prove the fix worked.
+
 ---
 
 ## Troubleshooting

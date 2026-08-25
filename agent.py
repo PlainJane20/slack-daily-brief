@@ -273,6 +273,10 @@ def format_for_prompt(channel_messages: dict, user_map: dict) -> str:
     parts = []
     for name, msgs in channel_messages.items():
         if not msgs:
+            # Still send quiet channels through (with no messages) so Claude
+            # can note them in Channel Summaries per the system prompt rule —
+            # previously these were skipped entirely and silently vanished.
+            parts.append(f"## #{name}\n(no messages in this window)")
             continue
         lines = [f"## #{name}"]
         for msg in msgs:
@@ -288,7 +292,7 @@ def format_for_prompt(channel_messages: dict, user_map: dict) -> str:
 
 # ─── Claude summarization ────────────────────────────────────────────────────
 
-SYSTEM_PROMPT = """You are a senior program manager's personal assistant at Verily.
+SYSTEM_PROMPT = """You are a senior program manager's personal assistant.
 Read raw Slack channel logs and produce a crisp, actionable daily brief.
 
 Output format — use exactly these markdown headers, skip any section if there is nothing to put in it:
@@ -300,16 +304,26 @@ Bullet list of decisions made or agreed upon across channels.
 
 ## ✅ Action Items
 Format each as: "- [ ] **@person**: what they need to do — [#channel]"
-Infer owners from context when not explicitly assigned.
+Only include an item here if someone in the transcript explicitly took on,
+was asked to do, or was assigned a concrete task. You may infer the OWNER from
+context (e.g. "I can take a look" implies that speaker owns it) — but never
+invent the TASK itself, and never assign an item to a person or team who
+wasn't actually part of that exchange. An unanswered request or open question
+with no one committing to act on it belongs in Open Questions, not here.
 
 ## 🚨 Blockers & Urgencies
-Anything blocked, on fire, or needing immediate attention.
+Anything the transcript explicitly describes as blocked, broken, or on fire.
+Do not add your own severity framing (e.g. "at risk", "urgent") beyond what
+the messages themselves state.
 
 ## 📣 Announcements & FYIs
 Launches, policy changes, deadlines, important one-way information.
 
 ## ❓ Open Questions
-Questions asked in channels that haven't been answered yet.
+Questions asked in channels that haven't been answered yet — including
+proposals phrased as questions ("should we...?") that got no reply. A
+question that was answered later in the same thread is resolved, not open;
+do not include it anywhere in the brief.
 
 ## 📰 Channel Summaries
 One short paragraph per channel that had activity.
@@ -319,7 +333,9 @@ For quiet channels, note them briefly: "**#channel-name** — No significant act
 
 Rules:
 - Be concise and direct. No filler phrases like "It's worth noting that..."
-- Always try to name action item owners.
+- Ground every claim in the transcript. If it isn't stated or directly implied
+  by someone in the messages, it doesn't belong in the brief — don't fill gaps
+  with plausible-sounding detail (invented owners, tasks, teams, or severity).
 - Combine duplicate topics across channels into one item.
 - Skip standup bot outputs, pure emoji reactions, and social chatter unless they contain real information.
 - If a channel had zero messages, still include it in Channel Summaries as quiet.
@@ -343,7 +359,10 @@ def summarize(formatted: str, model: str, focus: list, date_str: str) -> str:
             ),
         }],
     )
-    return msg.content[0].text
+    # Some models prepend extended-thinking blocks before the text block, so
+    # find the text block by type rather than assuming content[0] is it.
+    text_blocks = [block.text for block in msg.content if block.type == "text"]
+    return "\n".join(text_blocks)
 
 
 # ─── Output ──────────────────────────────────────────────────────────────────
@@ -535,7 +554,7 @@ def main():
         prog.update(task, description=f"Summarizing {total_msgs} messages with Claude...")
         formatted = format_for_prompt(all_messages, user_map)
 
-    if not formatted.strip():
+    if total_msgs == 0:
         console.print(
             "[yellow]No meaningful messages in selected channels for this time window.[/]"
         )

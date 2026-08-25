@@ -10,10 +10,9 @@ lookback_hours: 24
 # You must be a member of every channel listed here — channel lookup requires
 # membership, it isn't a workspace-wide search.
 channels:
-  - general
-  # - your-team-channel
-  # - product
-  # - engineering
+  - all-scope-creep-social-club
+  - social
+  - new-channel
 
 # ── Optional: channels to skip ────────────────────────────────────────────────
 # Even if the channel appears in your workspace, always skip these.

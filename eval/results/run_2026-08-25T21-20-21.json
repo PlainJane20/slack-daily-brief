@@ -1,0 +1,1708 @@
+{
+  "model": "claude-sonnet-5",
+  "judge_model": "claude-sonnet-5",
+  "fixture_results": [
+    {
+      "id": "explicit_decision_and_owner",
+      "notes": "",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udd11 Key Decisions\n- v2.1 launch date pushed to Sep 15, confirmed with leadership. \u2014 [#product]\n\n## \u2705 Action Items\n- [ ] **@deepak**: Update the external launch doc by EOD Friday \u2014 [#product]\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Priya confirmed the v2.1 launch is pushed to Sep 15, per leadership, and assigned Deepak to update the external launch doc by EOD Friday; Deepak acknowledged.",
+      "grade": {
+        "category_errors": [],
+        "hallucinations": [],
+        "matched_expected": [
+          {
+            "fact": "v2.1 launch date moved to Sep 15",
+            "found": true,
+            "evidence": "v2.1 launch date pushed to Sep 15, confirmed with leadership."
+          },
+          {
+            "fact": "action item: deepak to update external launch doc by EOD Friday",
+            "found": true,
+            "evidence": "@deepak: Update the external launch doc by EOD Friday"
+          }
+        ],
+        "reasoning": "Both expected facts are correctly captured, and the summary does not mention the forbidden claim about Priya. No hallucinations or category errors found.",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "inferred_owner_from_context",
+      "notes": "",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \u2705 Action Items\n- [ ] **@alex**: Investigate and fix the failing staging DB migration script for the new tenants table \u2014 [#engineering]\n\n## \ud83d\udea8 Blockers & Urgencies\n- Staging DB migration script is failing on the new tenants table (owner: alex, investigating this afternoon) \u2014 [#engineering]\n\n## \ud83d\udcf0 Channel Summaries\n**#engineering** \u2014 Sam flagged a failing staging DB migration script on the new tenants table; Alex, the original author of the migration, will investigate this afternoon.",
+      "grade": {
+        "category_errors": [],
+        "hallucinations": [],
+        "matched_expected": [
+          {
+            "fact": "action_items: owner alex, task investigate/fix the failing staging DB migration",
+            "found": true,
+            "evidence": "- [ ] **@alex**: Investigate and fix the failing staging DB migration script for the new tenants table"
+          },
+          {
+            "fact": "blockers: staging DB migration script is failing on the new tenants table",
+            "found": true,
+            "evidence": "Staging DB migration script is failing on the new tenants table (owner: alex, investigating this afternoon)"
+          }
+        ],
+        "reasoning": "Both expected facts are present, correctly categorized, and no hallucinations or forbidden claims (e.g., sam fixing the migration) appear.",
+        "verdict": "pass"
+      }
+    },
+    {
+      "id": "duplicate_topic_merges_across_channels",
+      "notes": "Should appear as ONE decision, not duplicated per-channel.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udd11 Key Decisions\n- Q3 infra migration delayed by two weeks to allow the compliance audit to complete first.\n\n## \ud83d\udea8 Blockers & Urgencies\n- Compliance audit is holding up the Q3 infra migration; migration cannot proceed until it's finished.\n\n## \ud83d\udce3 Announcements & FYIs\n- **Jordan** (#product, #engineering): Q3 infra migration pushed back two weeks pending compliance audit completion.\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Jordan announced a two-week delay to the Q3 infra migration due to a pending compliance audit.\n**#engineering** \u2014 Jordan relayed the same infra migration delay notice to the engineering team, citing the compliance audit as the blocker.",
+      "grade": {
+        "matched_expected": [
+          {
+            "fact": "{",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "{",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "f",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "f",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "c",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "c",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": ":",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": ":",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "Q",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "Q",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "3",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "3",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "f",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "f",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "r",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "r",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "m",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "m",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "g",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "g",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "r",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "r",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "d",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "d",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "l",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "l",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "y",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "y",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "d",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "d",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "w",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "w",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "w",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "w",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "k",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "k",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "s",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "s",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "f",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "f",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "r",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "r",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "h",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "h",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "c",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "c",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "m",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "m",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "p",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "p",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "l",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "l",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "c",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "c",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "u",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "u",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "d",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "d",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": ",",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": ",",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "f",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "f",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "u",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "u",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "d",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "d",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": ":",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": ":",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "r",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "r",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "u",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "u",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": ",",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": ",",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "v",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "v",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "d",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "d",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "c",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "c",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": ":",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": ":",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "K",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "K",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "y",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "y",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "D",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "D",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "c",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "c",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "s",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "s",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "s",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "s",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": ":",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": ":",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "'",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "'",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "Q",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "Q",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "3",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "3",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "f",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "f",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "r",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "r",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "m",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "m",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "g",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "g",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "r",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "r",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "d",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "d",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "l",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "l",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "y",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "y",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "d",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "d",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "b",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "b",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "y",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "y",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "w",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "w",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "w",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "w",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "k",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "k",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "s",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "s",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "l",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "l",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "l",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "l",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "w",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "w",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "h",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "h",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "c",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "c",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "m",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "m",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "p",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "p",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "l",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "l",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "n",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "n",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "c",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "c",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "a",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "a",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "u",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "u",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "d",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "d",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "c",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "c",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "o",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "o",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "m",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "m",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "p",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "p",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "l",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "l",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "e",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "e",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": " ",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": " ",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "f",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "f",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "i",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "i",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "r",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "r",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "s",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "s",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "t",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "t",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": ".",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": ".",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "'",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "'",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "\"",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "\"",
+            "why_unsupported": "malformed grader output"
+          },
+          {
+            "fact": "}",
+            "found": false,
+            "evidence": "malformed grader output",
+            "claim": "}",
+            "why_unsupported": "malformed grader output"
+          }
+        ],
+        "hallucinations": [],
+        "category_errors": [],
+        "verdict": "fail",
+        "reasoning": "(missing from grader output)"
+      }
+    },
+    {
+      "id": "question_resolved_later_in_thread_not_open",
+      "notes": "The question WAS answered in-thread \u2014 must not show up under Open Questions.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udd11 Key Decisions\n- Ownership of the auth service has moved to Priya's team following the recent reorg.\n\n## \ud83d\udce3 Announcements & FYIs\n- Auth service ownership transferred to Priya's team as part of the reorg (confirmed by Raj).\n\n## \ud83d\udcf0 Channel Summaries\n**#engineering** \u2014 Brief exchange confirming that auth service ownership shifted to Priya's team post-reorg; no other activity.",
+      "grade": {
+        "category_errors": [
+          "The transcript is a simple Q&A that was resolved (question was answered by raj), but the summary elevates this to a 'Key Decision' and repeats it as an 'Announcement/FYI' - this is an overstatement of a minor status confirmation into two separate formal summary categories."
+        ],
+        "hallucinations": [
+          {
+            "claim": "Ownership of the auth service has moved to Priya's team following the recent reorg (listed as a Key Decision)",
+            "why_unsupported": "The transcript shows this as an informal answer to a question in a Slack thread, not a formal decision. The rubric explicitly states this should be treated as unanswered/not mentioned, and expected the summary to be minimal or empty for this content."
+          }
+        ],
+        "matched_expected": [],
+        "reasoning": "The rubric expected no substantive content to be extracted from this brief exchange, explicitly listing the auth service ownership question as something that must not be mentioned. The summary instead prominently features this as both a 'Key Decision' and an 'Announcement/FYI', directly violating the must_not_mention constraint and fabricating decision-level significance from a casual Slack Q&A.",
+        "verdict": "fail"
+      }
+    },
+    {
+      "id": "question_left_unanswered_stays_open",
+      "notes": "",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \u2753 Open Questions\n- **taylor** (#product): Is the v2.1 pricing page copy final yet? \u2014 unanswered.\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Taylor asked whether the v2.1 pricing page copy is finalized; no response yet.",
+      "grade": {
+        "category_errors": [],
+        "hallucinations": [],
+        "matched_expected": [
+          {
+            "fact": "is the v2.1 pricing page copy final?",
+            "found": true,
+            "evidence": "Open Questions: taylor (#product): Is the v2.1 pricing page copy final yet? \u2014 unanswered."
+          }
+        ],
+        "verdict": "pass",
+        "reasoning": "The summary correctly captures the single open question from the transcript with no added claims or category errors."
+      }
+    },
+    {
+      "id": "lookalike_decision_is_actually_a_question",
+      "notes": "A proposal phrased as a question with no reply must NOT become a firm decision.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udea8 Blockers & Urgencies\n- Decision on delaying v2.1 launch (to fix onboarding bug) is stalled \u2014 **noah** has received no response and launch timeline is at risk. [#product]\n\n## \u2753 Open Questions\n- **noah**: Should v2.1 launch be delayed by a week to fix the onboarding bug? \u2014 unanswered as of last message. [#product]\n\n## \u2705 Action Items\n- [ ] **Product team/leads**: Respond to noah's question on delaying v2.1 launch and confirm decision \u2014 [#product]\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 noah raised an unanswered question about delaying the v2.1 launch by a week to address an onboarding bug; no response yet, creating a decision bottleneck.",
+      "grade": {
+        "category_errors": [],
+        "hallucinations": [
+          {
+            "claim": "Blockers & Urgencies section frames this as a decision being 'stalled' and 'launch timeline is at risk'",
+            "why_unsupported": "Transcript only shows a single question and a follow-up saying no one has responded; there's no mention of launch timeline being at risk, this is an inferred escalation not stated in transcript."
+          },
+          {
+            "claim": "Action item: Product team/leads should respond to noah's question and confirm decision",
+            "why_unsupported": "Transcript does not assign or imply any action item or owner for responding; this is an invented task."
+          }
+        ],
+        "matched_expected": [
+          {
+            "fact": "[open_questions] should the v2.1 launch be delayed a week to fix the onboarding bug?",
+            "found": true,
+            "evidence": "Should v2.1 launch be delayed by a week to fix the onboarding bug? \u2014 unanswered as of last message."
+          }
+        ],
+        "reasoning": "The open question fact is correctly captured, but the summary hallucinates additional content: a 'Blockers & Urgencies' claim about launch timeline being at risk, and an invented action item assigning responsibility to 'Product team/leads' that was never stated in the transcript.",
+        "verdict": "fail"
+      }
+    },
+    {
+      "id": "noise_filtering_standup_bot_and_reactions",
+      "notes": "",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udea8 Blockers & Urgencies\n- Prod data pipeline is failing for 3 customers. Sam needs prod log access from the platform team to debug \u2014 unresolved.\n\n## \u2705 Action Items\n- [ ] **@platform-team**: Grant Sam prod log access to debug the failing data pipeline \u2014 [#engineering]\n- [ ] **@sam**: Debug and resolve prod data pipeline failure affecting 3 customers \u2014 [#engineering]\n\n## \u2753 Open Questions\n- Sam asked if anyone from platform can help with prod log access \u2014 no response yet.\n\n## \ud83d\udcf0 Channel Summaries\n**#engineering** \u2014 Sam flagged a prod data pipeline failure impacting 3 customers and requested platform team help for log access; no response yet. Standup thread had only emoji acknowledgments, no real updates.",
+      "grade": {
+        "category_errors": [
+          "Sam's request for help was framed as a firm action item assigned to @platform-team and @sam, rather than an open request/question as it appeared in the transcript."
+        ],
+        "hallucinations": [
+          {
+            "claim": "@platform-team: Grant Sam prod log access to debug the failing data pipeline (as a formal action item)",
+            "why_unsupported": "The transcript shows only a request/question from Sam, not an assigned action item to a platform team."
+          },
+          {
+            "claim": "@sam: Debug and resolve prod data pipeline failure affecting 3 customers (as a formal action item)",
+            "why_unsupported": "Not stated as an assigned task in the transcript; this is inferred."
+          },
+          {
+            "claim": "Standup thread had only emoji acknowledgments, no real updates.",
+            "why_unsupported": "This mentions emoji reactions as content, which is explicitly forbidden by must_not_mention."
+          }
+        ],
+        "matched_expected": [
+          {
+            "fact": "prod data pipeline failing for 3 customers, sam needs prod log access",
+            "found": true,
+            "evidence": "Prod data pipeline is failing for 3 customers. Sam needs prod log access from the platform team to debug \u2014 unresolved."
+          }
+        ],
+        "verdict": "fail",
+        "reasoning": "While the core blocker fact was captured, the summary hallucinates formal action items not present in the transcript and violates the must_not_mention rule by referencing emoji reactions as content in the channel summary."
+      }
+    },
+    {
+      "id": "quiet_channel_still_listed",
+      "notes": "Channel had zero messages \u2014 must still appear in Channel Summaries as quiet, per system prompt rule.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udcf0 Channel Summaries\n**#random** \u2014 No significant activity.",
+      "grade": {
+        "matched_expected": [
+          {
+            "fact": "channel_summaries_mention #random",
+            "found": true,
+            "evidence": "**#random** \u2014 No significant activity."
+          }
+        ],
+        "hallucinations": [],
+        "category_errors": [],
+        "verdict": "pass",
+        "reasoning": "The transcript is essentially empty (#random with no content), and the summary correctly reflects this by mentioning #random with no significant activity, matching the sole expected fact with no hallucinations."
+      }
+    },
+    {
+      "id": "announcement_not_miscategorized_as_action_item",
+      "notes": "'No action needed' FYIs must land in Announcements, not be turned into a checklist item.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udce3 Announcements & FYIs\n- New security policy: 2FA required on all service accounts by **Sep 1**. No action needed if already enabled.\n- All-hands moved to **Thursday 10 AM PT** this week only.\n\n## \ud83d\udcf0 Channel Summaries\n**#verily-it-announce** \u2014 IT posted two announcements: an upcoming 2FA mandate for service accounts (deadline Sep 1) and a one-time schedule change for this week's all-hands to Thursday 10 AM PT.",
+      "grade": {
+        "matched_expected": [
+          {
+            "fact": "2FA required on service accounts by Sep 1",
+            "found": true,
+            "evidence": "New security policy: 2FA required on all service accounts by Sep 1. No action needed if already enabled."
+          },
+          {
+            "fact": "all-hands moved to Thursday 10 AM PT",
+            "found": true,
+            "evidence": "All-hands moved to Thursday 10 AM PT this week only."
+          }
+        ],
+        "hallucinations": [],
+        "category_errors": [],
+        "verdict": "pass",
+        "reasoning": "Both expected facts are correctly surfaced in the Announcements section, no action item was fabricated for 2FA, and there are no hallucinations or category errors."
+      }
+    },
+    {
+      "id": "multiple_distinct_decisions_not_merged",
+      "notes": "Two unrelated decisions in the same channel \u2014 must be listed as two, not blended into one.",
+      "summary": "# \ud83d\udccb Slack Daily Brief \u2014 Eval Run\n\n## \ud83d\udd11 Key Decisions\n- Cutting the legacy CSV export feature in v2.1.\n- Renaming the \"Workspaces\" tab to \"Projects\" across the UI.\n\n## \u2705 Action Items\n- [ ] **@priya**: Coordinate with engineering to scope removal of legacy CSV export for v2.1 \u2014 [#product]\n- [ ] **@priya**: Coordinate with design/eng to implement \"Workspaces\" \u2192 \"Projects\" rename across UI \u2014 [#product]\n\n## \ud83d\udce3 Announcements & FYIs\n- Legacy CSV export will be removed starting v2.1 \u2014 teams relying on it should plan migration.\n- UI rename: \"Workspaces\" tab will become \"Projects\" everywhere.\n\n## \ud83d\udcf0 Channel Summaries\n**#product** \u2014 Priya announced two decisions: removing the legacy CSV export in v2.1 and renaming the \"Workspaces\" tab to \"Projects\" throughout the UI. No further discussion or pushback logged.",
+      "grade": {
+        "matched_expected": [
+          {
+            "fact": "cutting the legacy CSV export feature in v2.1",
+            "found": true,
+            "evidence": "Cutting the legacy CSV export feature in v2.1."
+          },
+          {
+            "fact": "renaming the 'Workspaces' tab to 'Projects'",
+            "found": true,
+            "evidence": "Renaming the \"Workspaces\" tab to \"Projects\" across the UI."
+          }
+        ],
+        "hallucinations": [
+          {
+            "claim": "Action item: @priya to coordinate with engineering to scope removal of legacy CSV export for v2.1",
+            "why_unsupported": "Transcript only states a decision was made; no action item or task assignment to priya was mentioned."
+          },
+          {
+            "claim": "Action item: @priya to coordinate with design/eng to implement Workspaces->Projects rename",
+            "why_unsupported": "Transcript only states a decision was made; no action item or task assignment was mentioned."
+          }
+        ],
+        "category_errors": [
+          "Decisions were turned into action items assigned to @priya, but the transcript presents them as finalized decisions with no follow-up tasks or owners specified."
+        ],
+        "verdict": "fail",
+        "reasoning": "Both expected decisions were correctly captured and kept as separate bullets (satisfying the must_not_mention constraint), but the summary fabricates action items and owners (@priya) that were never stated in the transcript, constituting hallucinations and category errors."
+      }
+    }
+  ],
+  "summary_stats": {
+    "pass_rate": 0.5,
+    "fixtures_passed": 5,
+    "fixtures_total": 10,
+    "recall": 0.05429864253393665,
+    "hallucinations": 8,
+    "category_errors": 3
+  }
+}
