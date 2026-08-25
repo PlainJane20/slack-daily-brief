@@ -124,6 +124,34 @@ The summary is printed to your terminal **and** saved to `~/slack-summary.md` (c
 
 ---
 
+## Posting back to Slack
+
+Set `slack_post_channel` in `config.yaml` to a channel name (a private
+channel works fine, and is what this is designed for — your own working
+notes, not a broadcast) and the generated brief posts there automatically
+after each run, via your own user token, using the `chat:write` scope. Leave
+it blank to skip posting entirely.
+
+## Stale item tracking
+
+Without this, an unanswered question shows up in the brief identically every
+single day forever. [tracking.py](tracking.py) fixes that: it pulls the
+bullets out of the Open Questions section, fuzzy-matches them (via
+`difflib`, deliberately no extra LLM call — see the module docstring for the
+tradeoff) against still-open items from previous runs, and flags anything
+that's lingered past `stale_after_days` (default 2) directly in the
+markdown:
+
+```
+- Still no word on the analytics vendor decision — [#got-a-sec]  🔴 *(open 3 days running)*
+```
+
+State lives in `history/open_items.json` (gitignored — it's your personal
+runtime data, not something to commit). An item that stops appearing in the
+brief is assumed resolved and dropped from history automatically.
+
+---
+
 ## Eval harness
 
 Prompt changes to an LLM summarizer are easy to break silently — a tweak that
