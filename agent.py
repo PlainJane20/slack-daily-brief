@@ -37,6 +37,18 @@ import anthropic
 
 from tracking import annotate_stale_items
 
+# Optional integration with agent-control-tower (cost ledger + audit log) if
+# that sibling repo is checked out alongside this one. Falls back to a plain
+# anthropic.Anthropic client if it isn't — this agent must keep working
+# standalone, not develop a hard dependency on a repo that might not exist
+# on someone else's machine.
+sys.path.insert(0, str(Path(__file__).parent.parent / "agent-control-tower"))
+try:
+    from governed_client import GovernedClient
+    _GOVERNANCE_AVAILABLE = True
+except ImportError:
+    _GOVERNANCE_AVAILABLE = False
+
 load_dotenv()
 console = Console()
 
@@ -346,8 +358,14 @@ Rules:
 """
 
 
-def summarize(formatted: str, model: str, focus: list, date_str: str) -> str:
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+def summarize(formatted: str, model: str, focus: list, date_str: str, daily_budget: float = None) -> str:
+    if _GOVERNANCE_AVAILABLE:
+        # "llm_call" is policy-exempt from approval (see agent-control-tower's
+        # policy.py) — this only adds cost tracking and an audit record, it
+        # never blocks or changes behavior for the launchd-scheduled path.
+        client = GovernedClient("slack-daily-agent", api_key=os.environ["ANTHROPIC_API_KEY"], daily_budget=daily_budget)
+    else:
+        client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
     focus_note = f"\n\nPlease give extra attention to: {', '.join(focus)}" if focus else ""
 
