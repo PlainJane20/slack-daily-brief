@@ -32,6 +32,16 @@ could look like.
 | **Result** | Eval pass rate **50% → 90%**, hallucinations **8 → 0** across the suite, verified against raw saved reports (below) |
 | **Stack** | Python · Claude (Anthropic API) · Slack API · `difflib` for deterministic matching · `launchd` for scheduling |
 
+## Competencies demonstrated
+
+| Competency | Observable evidence |
+|---|---|
+| Executive synthesis | Converts channel activity into decisions, actions, blockers, and unanswered questions |
+| Applied AI quality | Eval-driven prompt remediation improved pass rate from 50% to 90% and removed observed hallucinations |
+| Operational automation | Verified unattended execution through `launchd` with no TTY dependency |
+| Cost-aware engineering | Deterministic stale-item matching avoids an unnecessary model call |
+| Least-privilege integration | Slack permissions were expanded only when a write capability was introduced |
+
 ![Eval pass rate before and after the prompt fix](docs/images/eval_pass_rate.png)
 
 ## Architecture
