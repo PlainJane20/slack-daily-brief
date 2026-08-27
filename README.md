@@ -1,3 +1,5 @@
+<img src="docs/slack-daily-brief-banner.svg" alt="Slack Daily Brief — Applied Ai For Team Operations" width="100%" />
+
 # Slack Daily Brief Agent
 
 <div align="center">
