@@ -25,6 +25,17 @@ report in this repo, not a slide — the eval reports in `eval/results/` are
 the actual raw data behind the numbers below, not an example of what they
 could look like.
 
+> **Named, specifically:** Slack's own native AI channel recaps are the
+> real long-term threat here, not a third-party bot — free, built into
+> the product everyone already has open, and improving fast. Geekbot,
+> DailyBot, and Kollabe are the closer commercial peers, but most of them
+> are standup-collection bots (asking people to type an update) rather
+> than a passive brief derived from activity that already happened, which
+> is closer to this tool's model. None of them publish eval numbers for
+> hallucination rate the way this repo's `eval/results/` does — that's
+> the actual differentiator being bet on here, not "AI-summarized Slack"
+> itself, which is now commoditized.
+
 ## At a glance
 
 | | |
