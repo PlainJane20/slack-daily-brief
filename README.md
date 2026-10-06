@@ -48,7 +48,7 @@ could look like.
 |---|---|
 | **Problem** | Manually skimming Slack every morning for decisions, blockers, and asks buried in channel noise |
 | **Approach** | Claude-summarized daily brief, hardened against hallucination with a rubric-graded eval harness, tracked day-over-day so nothing silently repeats forever |
-| **Result** | Eval pass rate **50% → 90%**, hallucinations **8 → 0** across the suite, verified against raw saved reports (below) |
+| **Result** | Eval pass rate **50% → 90%**, hallucinations **8 → 0** across the 10-fixture suite; each figure is a single run, so treat as indicative (see Known limitations) |
 | **Stack** | Python · Claude (Anthropic API) · Slack API · `difflib` for deterministic matching · `launchd` for scheduling |
 
 ## Competencies demonstrated
@@ -86,12 +86,14 @@ flowchart LR
 
 - **Diagnosed and remediated a hallucination regression** via a custom
   rubric-graded eval harness — pass rate **50% → 90%**, hallucinations
-  **8 → 0**, verified against raw saved judge output in `eval/results/`.
+  **8 → 0** (one baseline run and one after-fix run each, not repeated;
+  see [Known limitations](#known-limitations)), checked against the saved
+  judge output in `eval/results/`.
 - **Found and fixed a silent bug in the eval harness's own metrics layer** —
   a malformed judge response corrupted a derived metric by ~16x with no
   exception raised. [Full writeup below](#the-eval-harness-itself-had-a-bug).
 - **Surfaced two latent production defects through live integration testing**
-  before they reached real usage, not caught by unit tests alone.
+  before they reached real usage (found by running it live, not by a test suite).
 - **Zero-marginal-cost state tracking** — day-over-day follow-through via
   deterministic string matching instead of an added LLM call per run.
 - **Verified, not assumed, unattended execution** — the scheduled path was
@@ -181,7 +183,7 @@ Required scopes:
 ### Step 3 — Install
 
 ```bash
-cd slack-daily-agent
+cd slack-daily-brief
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -262,7 +264,7 @@ prompt, so there's zero interactivity to hang on with no TTY attached
 1. Copy the template and fill in your absolute path:
    ```bash
    cp com.example.slack-daily-brief.plist ~/Library/LaunchAgents/com.<you>.slack-daily-brief.plist
-   # edit it: replace /absolute/path/to/slack-daily-agent with your actual path
+   # edit it: replace /absolute/path/to/slack-daily-brief with your actual path
    ```
 2. Load it:
    ```bash
@@ -295,6 +297,11 @@ markdown:
 State lives in `history/open_items.json` (gitignored — it's your personal
 runtime data, not something to commit). An item that stops appearing in the
 brief is assumed resolved and dropped from history automatically.
+
+`tracking.py` is **not covered by the eval harness** (which grades only the
+brief text). It has offline unit tests in `tests/test_tracking.py`
+(`python -m pytest tests/`), but those use hand-written examples; the 0.6
+`difflib` threshold has not been validated against real day-to-day wording.
 
 ---
 
@@ -403,6 +410,23 @@ This is the harness doing its actual job twice over: catching a real,
 non-obvious quality regression in the agent that spot-checking would have
 missed, and then catching a bug in its own metrics before those numbers went
 anywhere public.
+
+---
+
+## Known limitations
+
+- **Eval numbers are single runs.** The 50% (5/10) baseline and the 90%
+  (9/10) after-fix result are each one saved run, on 10 synthetic
+  fixtures, graded by an LLM judge. There are no repeated runs or variance
+  estimates; one fixture flipping changes the rate by 10 points.
+- **Eval does not cover `tracking.py`** or the Slack fetching, scheduling,
+  or posting paths. It tests only brief generation on synthetic transcripts.
+- **Unit tests are narrow.** The only unit tests are for `tracking.py`
+  (`tests/`, offline). `agent.py` and the eval harness have none.
+- **Stale-item matching is string similarity** (`difflib`, threshold 0.6)
+  and can miss heavily paraphrased questions, resetting the streak.
+- **Unit tests were not previously present;** earlier wording that implied
+  a test suite referred to live integration testing.
 
 ---
 
