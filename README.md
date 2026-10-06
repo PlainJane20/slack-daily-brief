@@ -48,8 +48,17 @@ could look like.
 |---|---|
 | **Problem** | Manually skimming Slack every morning for decisions, blockers, and asks buried in channel noise |
 | **Approach** | Claude-summarized daily brief, hardened against hallucination with a rubric-graded eval harness, tracked day-over-day so nothing silently repeats forever |
+| **Pattern** | Deterministic pipeline with a single LLM summarisation step; not an agent loop (see [Architecture pattern](#architecture-pattern)) |
 | **Result** | Eval pass rate **50% → 90%**, hallucinations **8 → 0** across the 10-fixture suite; each figure is a single run, so treat as indicative (see Known limitations) |
 | **Stack** | Python · Claude (Anthropic API) · Slack API · `difflib` for deterministic matching · `launchd` for scheduling |
+
+## Architecture pattern
+
+**Deterministic pipeline with LLM at the edges (not an agent loop).** `agent.py` fetches Slack messages (`fetch_messages`), formats them (`format_for_prompt`), makes a single Claude call (`summarize`), then post-processes the result in `tracking.py`, which uses `difflib` fuzzy matching, not a model, to flag stale open questions. The same code can post the brief to a Slack channel.
+
+- **Deterministic vs model-driven:** Fetching, formatting, stale-item tracking, scheduling (`run_daily_brief.sh` via `launchd`) and posting are deterministic. The brief's content comes from one model call, so the model is the draft step rather than a minor edge, and its accuracy is measured by the offline eval harness, not checked at run time.
+- **Human gate:** None for the unattended run. If `slack_post_channel` is set, `post_to_slack` posts without an approval step; this repo does not call the agent-control-tower approval gate. Interactive runs only ask whether to save the file.
+- **Honest limit:** It makes no decisions, uses no tools beyond the fixed fetch and post steps, and has no memory beyond the stale-item history file, so it is a scheduled summariser rather than something that plans or reacts.
 
 ## Competencies demonstrated
 
