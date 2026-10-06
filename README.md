@@ -39,8 +39,9 @@ could look like.
 > and this repo are the two upstream tools [exec-status-rollup](https://github.com/PlainJane20/exec-status-rollup)
 > connects into an executive rollup. [incident-postmortem-agent](https://github.com/PlainJane20/incident-postmortem-agent)
 > adapted this repo's eval harness structure. [agent-control-tower](https://github.com/PlainJane20/agent-control-tower)
-> is retrofitted onto this agent (and exec-status-rollup) as the
-> governance layer.
+> is optionally wired into this agent's model call for cost tracking and
+> audit logging only (see [Architecture pattern](#architecture-pattern)); it
+> does not gate posting to Slack.
 
 ## At a glance
 
@@ -54,10 +55,10 @@ could look like.
 
 ## Architecture pattern
 
-**Deterministic pipeline with LLM at the edges (not an agent loop).** `agent.py` fetches Slack messages (`fetch_messages`), formats them (`format_for_prompt`), makes a single Claude call (`summarize`), then post-processes the result in `tracking.py`, which uses `difflib` fuzzy matching, not a model, to flag stale open questions. The same code can post the brief to a Slack channel.
+**Deterministic pipeline around one LLM call (not an agent loop).** `agent.py` fetches Slack messages (`fetch_messages`), formats them (`format_for_prompt`), makes a single Claude call (`summarize`), then post-processes the result in `tracking.py`, which uses `difflib` fuzzy matching, not a model, to flag stale open questions. The same code can post the brief to a Slack channel.
 
 - **Deterministic vs model-driven:** Fetching, formatting, stale-item tracking, scheduling (`run_daily_brief.sh` via `launchd`) and posting are deterministic. The brief's content comes from one model call, so the model is the draft step rather than a minor edge, and its accuracy is measured by the offline eval harness, not checked at run time.
-- **Human gate:** None for the unattended run. If `slack_post_channel` is set, `post_to_slack` posts without an approval step; this repo does not call the agent-control-tower approval gate. Interactive runs only ask whether to save the file.
+- **Human gate:** None for the unattended run. If `slack_post_channel` is set, `post_to_slack` posts without an approval step; this repo does not call the agent-control-tower approval gate. If a sibling `agent-control-tower` checkout is importable, `summarize` uses its `GovernedClient` for the model call, which adds cost tracking and an audit record (it accepts a daily budget but none is passed, so no cap is enforced); the call is exempt from approval, and the Slack post never goes through it. Without that checkout it uses the plain Anthropic client. Interactive runs only ask whether to save the file.
 - **Honest limit:** It makes no decisions, uses no tools beyond the fixed fetch and post steps, and has no memory beyond the stale-item history file, so it is a scheduled summariser rather than something that plans or reacts.
 
 ## Competencies demonstrated
