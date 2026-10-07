@@ -8,6 +8,8 @@
 [![Powered by Claude](https://img.shields.io/badge/Powered_by-Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white)](https://www.anthropic.com/)
 [![Slack API](https://img.shields.io/badge/Slack_API-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://api.slack.com/)
 [![Eval-tested](https://img.shields.io/badge/Eval_pass_rate-90%25-1baf7a?style=for-the-badge)](eval/)
+[![CI](https://img.shields.io/github/actions/workflow/status/PlainJane20/slack-daily-brief/ci.yml?branch=main&style=for-the-badge&label=CI)](https://github.com/PlainJane20/slack-daily-brief/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/License-MIT-6b7280?style=for-the-badge)](LICENSE)
 
 </div>
 
@@ -450,6 +452,10 @@ anywhere public.
 | Channels show `not found` | Check spelling in `config.yaml`; channel names are case-insensitive |
 
 ---
+
+## License
+
+MIT — see [LICENSE](LICENSE).
 
 ## Contact
 
